@@ -28,7 +28,7 @@ server.send(sms_message)
 # Гипотеза 1: В переменной нет прогноза погоды для Курска
 # Способ проверки: Выведу переменную new_event
 # Код для проверки: print(new_event)
-# Установленный факт: прогноз погоды присутствует
+# Установленный факт: переменная не пуста
 # Вывод: проблема не здесь
 
 # Гипотеза 2.1: town_title на самом деле пуста
@@ -82,14 +82,12 @@ server.send(sms_message)
 # Код для проверки: 
 #token = os.getenv('FORECAST_TOKEN')
 #town_title = 'Курск'
-
 #print(token)
-
 #token = os.getenv('SMS_TOKEN')
 #server = SMSServer(token)
-
 #print(token)
-# Установленный факт: переменная не пуста
+# Установленный факт: переменная не пуста и принимает два разных значения,\
+# 85b98d96709fd49a69ba8165676e4592 и aGVsbG8gY3J5cHRvIGVudHVzaWFzdCA7KQ==
 # Вывод: проблема не здесь
 
 # Гипотеза 6: В переменную new_event = get_new_event(token, town_title)\
@@ -100,5 +98,5 @@ server.send(sms_message)
 #token = os.getenv('SMS_TOKEN')
 #server = SMSServer(token)
 #token = os.getenv('FORECAST_TOKEN')
-# Установленный факт:  прогноз выводится корректно
+# Установленный факт: прогноз выводится корректно
 # Вывод: код работоспособен
