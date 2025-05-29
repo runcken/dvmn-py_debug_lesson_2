@@ -2,24 +2,20 @@ import os
 from dotenv import load_dotenv
 from weather_sdk import get_new_event, SMSServer
 
+
 load_dotenv()
 
-token = os.getenv('FORECAST_TOKEN')
-town_title = 'Курск'
-
-token_sms = os.getenv('SMS_TOKEN')
+token = os.getenv('SMS_TOKEN')
 server = SMSServer(token)
+token = os.getenv('FORECAST_TOKEN')
 
+town_title = 'Курск'
 new_event = get_new_event(token, town_title)
+
 event_date = new_event.get_date()
 event_time = new_event.get_time()
 event_area = new_event.get_area()
 phenomenon_description = new_event.get_phenomenon()
-
-print(new_event)
-print(town_title)
-print(token)
-print(token_sms)
 
 sms_message = """{town_title}: {event_time} {event_date} {event_area} \
 ожидается {phenomenon_description}. Будьте внимательны и \
@@ -36,48 +32,42 @@ server.send(sms_message)
 # Вывод: проблема не здесь
 
 # Гипотеза 2.1: town_title на самом деле пуста
-# Способ проверки: выведу переменную town_title([хотя она определенно не пуста])
+# Способ проверки: выведу переменную town_title
 # Код для проверки: print(town_title)
 # Установленный факт: выводится название города
 # Вывод: проблема не здесь
 
 # Гипотеза 2.2: В town_title не название города
-# Способ проверки: не знаю, что и ответить на такое предположение
-# Код для проверки: ...
-# Установленный факт: ...
-# Вывод: ...
-
-# Гипотеза 3: Переменная token пуста
-# Способ проверки: Выведу переменную token
-# Код для проверки: print(token)
-# Установленный факт: переменная не пуста(ну потому что скопировал сразу все, не только код))
+# Способ проверки: выведу переменную town_title
+# Код для проверки: print(town_title)
+# Установленный факт: выводится название города
 # Вывод: проблема не здесь
 
-# Гипотеза 4.1: Переменная `event_time` пуста/в ней не время
+# Гипотеза 3.1: Переменная `event_time` пуста/в ней не время
 # Способ проверки: Выведу переменную event_time
 # Код для проверки: print(event_time)
 # Установленный факт: переменная не пуста и корректна
 # Вывод: проблема не здесь
 
-# Гипотеза 4.2: Переменная `event_date` пуста/в ней не дата
+# Гипотеза 3.2: Переменная `event_date` пуста/в ней не дата
 # Способ проверки: Выведу переменную event_date
 # Код для проверки: print(event_date)
 # Установленный факт: переменная не пуста и корректна
 # Вывод: проблема не здесь
 
-# Гипотеза 4.3: Переменная `event_area` пуста/в ней не место
+# Гипотеза 3.3: Переменная `event_area` пуста/в ней не место
 # Способ проверки: Выведу переменную event_area
 # Код для проверки: print(event_area)
 # Установленный факт: переменная не пуста и корректна
 # Вывод: проблема не здесь
 
-# Гипотеза 4.4: Переменная `phenomenon_description` пуста/в ней не описание погодного явления
+# Гипотеза 3.4: Переменная `phenomenon_description` пуста/в ней не описание погодного явления
 # Способ проверки: Выведу переменную phenomenon_description
 # Код для проверки: print(phenomenon_description)
 # Установленный факт: переменная не пуста и корректна
 # Вывод: проблема не здесь
 
-# Гипотеза 5: Неправильно оформлен метод .format для переменных sms_message и sms_template
+# Гипотеза 4: Неправильно оформлен метод .format для переменных sms_message и sms_template
 # Способ проверки: исключение переменной sms_template
 # Код для проверки: sms_message = """{town_title}: {event_time} {event_date} {event_area} \
 #ожидается {phenomenon_description}. Будьте внимательны и \
@@ -87,8 +77,28 @@ server.send(sms_message)
 # Установленный факт: прогноз выводится, хотя и не корректно
 # Вывод: это не последняя ошибка
 
-# Гипотеза 6: В коде одна переменная принимает два разных значения(token)
-# Способ проверки: изменим название второй переменной  на token_sms
-# Код для проверки: token_sms
-# Установленный факт: код работоспособен
-# Вывод: ок
+# Гипотеза 5: Переменная token пуста
+# Способ проверки: Выведу переменную token
+# Код для проверки: 
+#token = os.getenv('FORECAST_TOKEN')
+#town_title = 'Курск'
+
+#print(token)
+
+#token = os.getenv('SMS_TOKEN')
+#server = SMSServer(token)
+
+#print(token)
+# Установленный факт: переменная не пуста
+# Вывод: проблема не здесь
+
+# Гипотеза 6: В переменную new_event = get_new_event(token, town_title)\
+# попадает не тот агрумент token (их в коде два, token = os.getenv('SMS_TOKEN') и\
+# token = os.getenv('FORECAST_TOKEN'))
+# Способ проверки: изменим порядок строк кода
+# Код для проверки:
+#token = os.getenv('SMS_TOKEN')
+#server = SMSServer(token)
+#token = os.getenv('FORECAST_TOKEN')
+# Установленный факт:  прогноз выводится корректно
+# Вывод: код работоспособен
